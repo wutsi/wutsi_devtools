@@ -39,6 +39,8 @@ class _SDUIViewerPageState extends State<SDUIViewerPage> {
 
   @override
   void initState() {
+    super.initState();
+    
     setState(() {
       url = 'http://localhost:8080';
     });
