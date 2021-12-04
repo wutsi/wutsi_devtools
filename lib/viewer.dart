@@ -40,7 +40,7 @@ class _SDUIViewerPageState extends State<SDUIViewerPage> {
   @override
   void initState() {
     super.initState();
-    
+
     setState(() {
       url = 'http://localhost:8080';
     });
@@ -75,7 +75,7 @@ class _SDUIViewerPageState extends State<SDUIViewerPage> {
               padding: const EdgeInsets.all(10),
               child: TextFormField(
                 keyboardType: TextInputType.url,
-                maxLines: 10,
+                maxLines: 3,
                 decoration: const InputDecoration(
                     label: Text('Request Body'),
                     hintText: 'JSON to submit',
