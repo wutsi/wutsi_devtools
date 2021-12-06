@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sdui/sdui.dart';
 import 'package:wutsi_devtools/camera.dart';
 import 'package:wutsi_devtools/http.dart';
 import 'package:wutsi_devtools/viewer.dart';
@@ -8,11 +7,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   initHttp();
-
-  int count = await initCamera();
-  print(
-      '$count Cameras: ' + sduiCameras.map((e) => e.lensDirection).toString());
-
+  await initCamera();
+  
   runApp(const MyApp());
 }
 
