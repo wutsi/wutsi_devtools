@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wutsi_devtools/camera.dart';
 import 'package:wutsi_devtools/http.dart';
 import 'package:wutsi_devtools/viewer.dart';
 
@@ -7,7 +6,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   initHttp();
-  await initCamera();
+  // await initCamera();
   
   runApp(const MyApp());
 }
