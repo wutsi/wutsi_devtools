@@ -12,7 +12,6 @@ class HttpPackageInfoInterceptor extends HttpInterceptor {
     request.headers['X-Client-Version'] = '${pi.version}.${pi.buildNumber}';
     request.headers['X-OS'] = Platform.operatingSystem;
     request.headers['X-OS-Version'] = Platform.operatingSystemVersion;
-    request.headers['foo'] = 'bar';
   }
 
   @override

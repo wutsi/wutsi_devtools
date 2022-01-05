@@ -32,7 +32,7 @@ class HttpTracingInterceptor extends HttpInterceptor {
       this.clientId, this.deviceId, this.tenantId, this.packageInfo);
 
   @override
-  void onRequest(RequestTemplate request) async {
+  void onRequest(RequestTemplate request) {
     request.headers['X-Client-ID'] = clientId;
     request.headers['X-Trace-ID'] = const Uuid().v1();
     request.headers['X-Device-ID'] = deviceId;
@@ -40,8 +40,10 @@ class HttpTracingInterceptor extends HttpInterceptor {
 
     request.headers['X-Client-Version'] =
         '${packageInfo.version}.${packageInfo.buildNumber}';
-    request.headers['X-OS'] = Platform.operatingSystem;
-    request.headers['X-OS-Version'] = Platform.operatingSystemVersion;
+    try {
+      request.headers['X-OS'] = Platform.operatingSystem;
+      request.headers['X-OS-Version'] = Platform.operatingSystemVersion;
+    } catch (e) {}
   }
 
   @override
