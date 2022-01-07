@@ -9,7 +9,9 @@ import 'package_info.dart';
 void initHttp() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-  Http.getInstance().interceptors = [
+  Http
+      .getInstance()
+      .interceptors = [
     HttpJsonInterceptor(),
     HttpAuthorizationInterceptor(),
     HttpPackageInfoInterceptor(),
@@ -28,8 +30,8 @@ class HttpTracingInterceptor extends HttpInterceptor {
   final int tenantId;
   PackageInfo packageInfo;
 
-  HttpTracingInterceptor(
-      this.clientId, this.deviceId, this.tenantId, this.packageInfo);
+  HttpTracingInterceptor(this.clientId, this.deviceId, this.tenantId,
+      this.packageInfo);
 
   @override
   void onRequest(RequestTemplate request) {
@@ -39,11 +41,9 @@ class HttpTracingInterceptor extends HttpInterceptor {
     request.headers['X-Tenant-ID'] = tenantId.toString();
 
     request.headers['X-Client-Version'] =
-        '${packageInfo.version}.${packageInfo.buildNumber}';
-    try {
-      request.headers['X-OS'] = Platform.operatingSystem;
-      request.headers['X-OS-Version'] = Platform.operatingSystemVersion;
-    } catch (e) {}
+    '${packageInfo.version}.${packageInfo.buildNumber}';
+    request.headers['X-OS'] = Platform.operatingSystem;
+    request.headers['X-OS-Version'] = Platform.operatingSystemVersion;
   }
 
   @override
