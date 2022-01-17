@@ -7,7 +7,7 @@ void main() async {
 
   initHttp();
   // await initCamera();
-  
+
   runApp(const MyApp());
 }
 
@@ -32,7 +32,19 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const SDUIViewerPage(title: 'SDUI Viewer'),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const SDUIViewerPage(title: 'SDUI Viewer'),
+        '/401': (context) => const Error401(),
+      },
     );
   }
+}
+
+class Error401 extends StatelessWidget {
+  const Error401({Key? key}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) => const Center(child: Text('401'));
 }

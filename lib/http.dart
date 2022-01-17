@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sdui/sdui.dart';
 import 'package:uuid/uuid.dart';
@@ -9,14 +10,14 @@ import 'package_info.dart';
 void initHttp() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
-  Http
-      .getInstance()
-      .interceptors = [
+  Http.getInstance().interceptors = [
     HttpJsonInterceptor(),
     HttpAuthorizationInterceptor(),
     HttpPackageInfoInterceptor(),
     HttpTracingInterceptor('wutsi-devtools', const Uuid().v1(), 1, packageInfo),
   ];
+
+  DynamicRouteState.statusCodeRoutes[401] = '/401';
 }
 
 /// Interceptor that add tracing information into the request headers.
@@ -25,13 +26,15 @@ void initHttp() async {
 /// - `X-Trace-ID`: ID that represent the interfaction trace
 /// - `X-Client-ID`: Identification of the client application
 class HttpTracingInterceptor extends HttpInterceptor {
+  static final Logger _logger = LoggerFactory.create("HttpTracingInterceptor");
+
   final String clientId;
   final String deviceId;
   final int tenantId;
   PackageInfo packageInfo;
 
-  HttpTracingInterceptor(this.clientId, this.deviceId, this.tenantId,
-      this.packageInfo);
+  HttpTracingInterceptor(
+      this.clientId, this.deviceId, this.tenantId, this.packageInfo);
 
   @override
   void onRequest(RequestTemplate request) {
@@ -41,9 +44,13 @@ class HttpTracingInterceptor extends HttpInterceptor {
     request.headers['X-Tenant-ID'] = tenantId.toString();
 
     request.headers['X-Client-Version'] =
-    '${packageInfo.version}.${packageInfo.buildNumber}';
-    request.headers['X-OS'] = Platform.operatingSystem;
-    request.headers['X-OS-Version'] = Platform.operatingSystemVersion;
+        '${packageInfo.version}.${packageInfo.buildNumber}';
+    try {
+      request.headers['X-OS'] = Platform.operatingSystem;
+      request.headers['X-OS-Version'] = Platform.operatingSystemVersion;
+    } catch (ex) {
+      _logger.e("Unable to resolve platform information", ex);
+    }
   }
 
   @override
