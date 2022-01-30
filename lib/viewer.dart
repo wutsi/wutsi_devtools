@@ -74,12 +74,13 @@ class _SDUIViewerPageState extends State<SDUIViewerPage> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextFormField(
-                keyboardType: TextInputType.url,
+                keyboardType: TextInputType.multiline,
                 maxLines: 3,
                 decoration: const InputDecoration(
-                    label: Text('Request Body'),
-                    hintText: 'JSON to submit',
-                    border: OutlineInputBorder()),
+                  label: Text('Request Body'),
+                  hintText: 'JSON to submit',
+                  border: OutlineInputBorder(),
+                ),
                 onChanged: (value) => body = value.trim(),
               ),
             ),
