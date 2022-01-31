@@ -505,7 +505,7 @@ packages:
       name: sdui
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.147"
+    version: "0.0.154"
   share_plus:
     dependency: transitive
     description:
