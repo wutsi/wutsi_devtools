@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sdui/sdui.dart';
 import 'package:wutsi_devtools/http.dart';
 import 'package:wutsi_devtools/viewer.dart';
 
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: '/',
+      navigatorObservers: [sduiRouteObserver],
       routes: {
         '/': (context) => const SDUIViewerPage(title: 'SDUI Viewer'),
         '/401': (context) => const Error401(),
