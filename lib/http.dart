@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:logger/logger.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sdui/sdui.dart';
 import 'package:uuid/uuid.dart';
@@ -26,7 +25,7 @@ void initHttp() async {
 /// - `X-Trace-ID`: ID that represent the interfaction trace
 /// - `X-Client-ID`: Identification of the client application
 class HttpTracingInterceptor extends HttpInterceptor {
-  static final Logger _logger = LoggerFactory.create("HttpTracingInterceptor");
+  // static final Logger _logger = LoggerFactory.create("HttpTracingInterceptor");
 
   final String clientId;
   final String deviceId;
@@ -45,12 +44,8 @@ class HttpTracingInterceptor extends HttpInterceptor {
 
     request.headers['X-Client-Version'] =
         '${packageInfo.version}.${packageInfo.buildNumber}';
-    try {
-      request.headers['X-OS'] = Platform.operatingSystem;
-      request.headers['X-OS-Version'] = Platform.operatingSystemVersion;
-    } catch (ex) {
-      _logger.e("Unable to resolve platform information", ex);
-    }
+    request.headers['X-OS'] = Platform.operatingSystem;
+    request.headers['X-OS-Version'] = Platform.operatingSystemVersion;
   }
 
   @override

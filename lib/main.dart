@@ -7,7 +7,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   initHttp();
-  // await initCamera();
 
   runApp(const MyApp());
 }
