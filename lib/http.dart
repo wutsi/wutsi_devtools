@@ -54,8 +54,7 @@ class HttpTracingInterceptor extends HttpInterceptor {
 
 /// HTTP interceptor that adds Authorization header
 class HttpAuthorizationInterceptor extends HttpInterceptor {
-  final String accessToken =
-      'eyJraWQiOiIxIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYifQ.eyJ0ZW5hbnRfaWQiOjEsInN1YiI6IjM5Iiwic3ViX3R5cGUiOiJVU0VSIiwic2NvcGUiOlsiY2FydC1tYW5hZ2UiLCJjYXJ0LXJlYWQiLCJjYXRhbG9nLW1hbmFnZSIsImNhdGFsb2ctcmVhZCIsImNoYXQtbWFuYWdlIiwiY2hhdC1yZWFkIiwiY29udGFjdC1tYW5hZ2UiLCJjb250YWN0LXJlYWQiLCJvcmRlci1tYW5hZ2UiLCJvcmRlci1yZWFkIiwicGF5bWVudC1tYW5hZ2UiLCJwYXltZW50LW1hbmFnZSIsInBheW1lbnQtbWV0aG9kLW1hbmFnZSIsInBheW1lbnQtbWV0aG9kLXJlYWQiLCJwYXltZW50LXJlYWQiLCJwYXltZW50LXJlYWQiLCJzaGlwcGluZy1tYW5hZ2UiLCJzaGlwcGluZy1yZWFkIiwidGVuYW50LXJlYWQiLCJ1c2VyLW1hbmFnZSIsInVzZXItcmVhZCJdLCJpc3MiOiJ3dXRzaS5jb20iLCJuYW1lIjoiTWFpc29uIEgiLCJhZG1pbiI6ZmFsc2UsInBob25lX251bWJlciI6IisyMzc2OTAwMDAwMDEiLCJleHAiOjE2NjQ3NDQ4ODEsImlhdCI6MTY2NDY2MDI4MSwianRpIjoiMSJ9.VVavgc6cV88KIhk6mZJlTVEPgA7rYp82892H5vbNlKu5BjVkUoOMrKFaVlvhMpR9ikbuwGlu5gGMmdKH36IzUaS7PAGa0UdTAZ3K0YWtNlnuEdMWp_MlTkZjrEWdYh-6zFxRG32vEviMp_Wn9ZIRnnoHQsmIX3KoK8SGceO7L-w8XMtvZvPLbA5AbWkGjfK8BH1NfgX';
+  String accessToken = '';
 
   @override
   void onRequest(RequestTemplate request) {
@@ -63,5 +62,10 @@ class HttpAuthorizationInterceptor extends HttpInterceptor {
   }
 
   @override
-  void onResponse(ResponseTemplate response) async {}
+  void onResponse(ResponseTemplate response) async {
+    String? value = response.headers['x-access-token'];
+    if (value != null) {
+      accessToken = value;
+    }
+  }
 }
