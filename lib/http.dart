@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sdui/sdui.dart';
 import 'package:uuid/uuid.dart';
-
 import 'package_info.dart';
+import 'package:logger/logger.dart';
 
 void initHttp() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -25,8 +25,6 @@ void initHttp() async {
 /// - `X-Trace-ID`: ID that represent the interfaction trace
 /// - `X-Client-ID`: Identification of the client application
 class HttpTracingInterceptor extends HttpInterceptor {
-  // static final Logger _logger = LoggerFactory.create("HttpTracingInterceptor");
-
   final String clientId;
   final String deviceId;
   final int tenantId;
@@ -54,6 +52,7 @@ class HttpTracingInterceptor extends HttpInterceptor {
 
 /// HTTP interceptor that adds Authorization header
 class HttpAuthorizationInterceptor extends HttpInterceptor {
+  static final Logger _logger = LoggerFactory.create("HttpAuthorizationInterceptor");
   String accessToken = '';
 
   @override
@@ -65,6 +64,7 @@ class HttpAuthorizationInterceptor extends HttpInterceptor {
   void onResponse(ResponseTemplate response) async {
     String? value = response.headers['x-access-token'];
     if (value != null) {
+      _logger.i('AccessToken: $value');
       accessToken = value;
     }
   }
