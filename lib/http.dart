@@ -4,7 +4,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sdui/sdui.dart';
 import 'package:uuid/uuid.dart';
 import 'package_info.dart';
-import 'package:logger/logger.dart';
 
 void initHttp() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
