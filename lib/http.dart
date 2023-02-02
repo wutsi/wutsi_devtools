@@ -51,7 +51,7 @@ class HttpTracingInterceptor extends HttpInterceptor {
 
 /// HTTP interceptor that adds Authorization header
 class HttpAuthorizationInterceptor extends HttpInterceptor {
-  static final Logger _logger = LoggerFactory.create("HttpAuthorizationInterceptor");
+  // static final Logger _logger = LoggerFactory.create("HttpAuthorizationInterceptor");
   String accessToken = '';
 
   @override
@@ -63,7 +63,7 @@ class HttpAuthorizationInterceptor extends HttpInterceptor {
   void onResponse(ResponseTemplate response) async {
     String? value = response.headers['x-access-token'];
     if (value != null) {
-      _logger.i('AccessToken: $value');
+      // _logger.i('AccessToken: $value');
       accessToken = value;
     }
   }
